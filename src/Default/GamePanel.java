@@ -1,6 +1,5 @@
 package Default;
 
-import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -23,20 +22,53 @@ public class GamePanel extends JPanel implements ActionListener {
     Random random;
 
     GamePanel() {
+        super();
+        random = new Random();
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setBackground(Color.red);
+        this.setFocusable(true);
+        this.addKeyListener(new MyKeyAdapater());
 
+        startGame();
     }
 
     public void startGame() {
-
+        newApple();
+        running = true;
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
+
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        draw(g);
+    }
+
+    public void draw(Graphics g) {
+        for (int  i = 0; i < SCREEN_HEIGHT/UNIT_SIZE; i++) {
+            g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT/UNIT_SIZE);
+            g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH/UNIT_SIZE, i * UNIT_SIZE);
+        }
+    }
+
+
+    public void newApple() {
 
     }
 
     public void paint(Graphics g) {
 
     }
+
+    public void move() {
+
+    }
+
+    public void checkApple() {
+
+    }
+
 
     public void checkCollisions() {
 
@@ -54,7 +86,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapater extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            super.keyPressed(e);
+
         }
     }
 

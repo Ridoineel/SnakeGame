@@ -1,12 +1,14 @@
 package Default;
 import javax.swing.JFrame;
+import java.awt.*;
 
 public class GameFrame extends JFrame {
     GameFrame() {
         this.add(new GamePanel());
         this.setTitle("Snake");
-        this.setResizable(true);
+        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBackground(Color.black);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
