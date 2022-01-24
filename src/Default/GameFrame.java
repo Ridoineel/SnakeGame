@@ -1,6 +1,5 @@
 package Default;
 import javax.swing.JFrame;
-import java.awt.*;
 
 public class GameFrame extends JFrame {
     GameFrame() {
@@ -8,7 +7,6 @@ public class GameFrame extends JFrame {
         this.setTitle("Snake");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBackground(Color.black);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
