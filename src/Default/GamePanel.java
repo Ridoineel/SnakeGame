@@ -20,7 +20,9 @@ public class GamePanel extends JPanel implements ActionListener {
     int applesEaten;
     int appleX, appleY;
     char direction;
-    boolean running = false;
+    char[] d = {'D', 'R'};
+    boolean running;
+    boolean menu = true;
     Timer timer;
     Random random;
 
@@ -40,7 +42,7 @@ public class GamePanel extends JPanel implements ActionListener {
         x = new int[GAME_UNITS];
         y = new int[GAME_UNITS];
         bodyParts = 6;
-        direction = 'R';
+        direction = d[random.nextInt(2)];
         applesEaten = 0;
         running = true;
 
@@ -59,7 +61,11 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
-        if (running) {
+        diagonalsLines(g);
+
+        if (menu) {
+            menu(g);
+        }else if (running) {
             // draw verticals lines and horizontals lines
             //for (int i = 0; i < Math.max(SCREEN_HEIGHT, SCREEN_WIDTH) / UNIT_SIZE; i++) {
                 //g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
@@ -82,13 +88,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
             }
         }else {
-            // draw diagonals lines
-             for (int i = 0; i < Math.max(SCREEN_HEIGHT, SCREEN_WIDTH) / UNIT_SIZE; i++) {
-                 g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE + SCREEN_WIDTH, SCREEN_HEIGHT);
-                 g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH - i * UNIT_SIZE, SCREEN_HEIGHT);
-             }
-
-             gameOver(g);
+            gameOver(g);
         }
 
         // Print score
@@ -96,6 +96,36 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setFont(new Font("Ink Free", Font.BOLD, 20));
         FontMetrics metrics = g.getFontMetrics(g.getFont());
         g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: "))/2, 20);
+    }
+
+    public void diagonalsLines(Graphics g){
+        // draw diagonals lines
+        for (int i = 0; i < Math.max(SCREEN_HEIGHT, SCREEN_WIDTH) / UNIT_SIZE; i++) {
+            g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE + SCREEN_WIDTH, SCREEN_HEIGHT);
+            g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH - i * UNIT_SIZE, SCREEN_HEIGHT);
+        }
+    }
+
+    public void menu(Graphics g) {
+        running = false;
+
+        // print title (Snake Game)
+        g.setColor(Color.BLUE);
+        g.setFont(new Font("Ink Free", Font.BOLD, 60));
+        FontMetrics metrics = g.getFontMetrics(g.getFont());
+        g.drawString("Snake Game", (SCREEN_WIDTH - metrics.stringWidth("Snake Game"))/2, 100);
+
+        /* manage mode */
+        g.setColor(Color.GRAY);
+        g.setFont(new Font("Ink Free", Font.BOLD, 30));
+        metrics = g.getFontMetrics(g.getFont());
+        g.drawString("Press 1 or 2", (SCREEN_WIDTH - metrics.stringWidth("Press 1 or 2"))/2, SCREEN_HEIGHT/2);
+
+        g.setFont(new Font("Ink Free", Font.PLAIN, 25));
+        metrics = g.getFontMetrics(g.getFont());
+        g.drawString("1. With walls", (SCREEN_WIDTH - metrics.stringWidth("1. With walls"))/2, SCREEN_HEIGHT/2 + 30);
+        g.drawString("2. Without walls", (SCREEN_WIDTH - metrics.stringWidth("1. With walls"))/2, SCREEN_HEIGHT/2 + 60);
+        // to align 1. and 2. i set x for 2 to with metrics.stringWidth("1. With walls")
     }
 
     public void newApple() {
@@ -222,7 +252,25 @@ public class GamePanel extends JPanel implements ActionListener {
                     }
                     break;
                 case KeyEvent.VK_ENTER:
+                    if (!running) {
+                        menu = true;
+                    }
+
                     startGame();
+                    break;
+                case KeyEvent.VK_NUMPAD1:
+                    if (menu) {
+                        mode = 1;
+                        menu = false;
+                        startGame();
+                    }
+                    break;
+                case KeyEvent.VK_NUMPAD2:
+                    if (menu) {
+                        mode = 2;
+                        menu = false;
+                        startGame();
+                    }
                     break;
             }
         }
