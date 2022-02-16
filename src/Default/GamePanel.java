@@ -78,11 +78,18 @@ public class GamePanel extends JPanel implements ActionListener {
 
             // draw snake
             for (int i = 0; i < bodyParts; i++) {
+
                 if (i == 0) {
-                    g.setColor(Color.green);
+                    // color for head
+                    g.setColor(Color.WHITE);
+
                 } else {
-                    g.setColor(Color.gray);
-                    // g.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+                    // color for body
+                    if ((applesEaten != 0) && (applesEaten % 5 == 0)) {
+                        g.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+                    }else {
+                        g.setColor(Color.gray);
+                    }
                 }
 
                 g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
