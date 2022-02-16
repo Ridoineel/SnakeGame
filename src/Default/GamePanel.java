@@ -88,7 +88,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
                 } else {
                     // color for body
-                    if ((applesEaten != 0) && (applesEaten % 5 == 0)) {
+                    if ((applesEaten != 0) && (applesEaten % 10 == 0)) {
                         g.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
                     }else {
                         g.setColor(Color.gray);
@@ -203,12 +203,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
             if (mode == 1) {
                 // when head touch vertical walls
-                if (x[0]  < 0 || x[0] > SCREEN_WIDTH) {
+                if (x[0]  < 0 || x[0] > SCREEN_WIDTH - UNIT_SIZE) {
                     running = false;
                 }
 
                 // when head touch horizontal walls
-                if (y[0] < 0 || y[0] > SCREEN_HEIGHT) {
+                if (y[0] < 0 || y[0] > SCREEN_HEIGHT - UNIT_SIZE) {
                     running = false;
                 }
 
