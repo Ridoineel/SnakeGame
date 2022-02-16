@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements ActionListener {
         super();
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        this.setBackground(Color.black);
+        this.setBackground(new Color(30, 30, 30));
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapater());
 
@@ -188,16 +188,16 @@ public class GamePanel extends JPanel implements ActionListener {
 
             }else{
                 if (x[0] < 0) {
-                    x[0] = SCREEN_WIDTH;
+                    x[0] = SCREEN_WIDTH - UNIT_SIZE;
                 }
-                if (x[0] > SCREEN_WIDTH) {
+                if (x[0] > SCREEN_WIDTH - UNIT_SIZE) {
                     x[0] = 0;
                 }
 
                 if (y[0] < 0) {
-                    y[0] = SCREEN_HEIGHT;
+                    y[0] = SCREEN_HEIGHT - UNIT_SIZE;
                 }
-                if (y[0] > SCREEN_HEIGHT) {
+                if (y[0] > SCREEN_HEIGHT - UNIT_SIZE) {
                     y[0] = 0;
                 }
             }
