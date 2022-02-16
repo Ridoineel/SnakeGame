@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements ActionListener {
     char direction;
     char[] d = {'D', 'R'};
     boolean running;
+    boolean pause;
     boolean menu = true;
     Timer timer;
     Random random;
@@ -65,6 +66,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
         if (menu) {
             menu(g);
+        }else if (pause) {
+            pauseWindow(g);
         }else if (running) {
             // draw verticals lines and horizontals lines
             //for (int i = 0; i < Math.max(SCREEN_HEIGHT, SCREEN_WIDTH) / UNIT_SIZE; i++) {
@@ -133,6 +136,26 @@ public class GamePanel extends JPanel implements ActionListener {
         g.drawString("1. With walls", (SCREEN_WIDTH - metrics.stringWidth("1. With walls"))/2, SCREEN_HEIGHT/2 + 30);
         g.drawString("2. Without walls", (SCREEN_WIDTH - metrics.stringWidth("1. With walls"))/2, SCREEN_HEIGHT/2 + 60);
         // to align 1. and 2. i set x for 2 to with metrics.stringWidth("1. With walls")
+
+        g.setFont(new Font("Ink Free", Font.PLAIN, 20));
+        metrics = g.getFontMetrics(g.getFont());
+        g.drawString("While playing, press P to pause,", (SCREEN_WIDTH - metrics.stringWidth("While playing, press P to pause,"))/2, SCREEN_HEIGHT/2 + 110);
+        g.drawString("Enter to replay.", (SCREEN_WIDTH - metrics.stringWidth("Enter to replay."))/2, SCREEN_HEIGHT/2 + 130);
+
+    }
+
+    public void pauseWindow(Graphics g) {
+        // Pause window content
+
+        g.setColor(Color.GRAY);
+        g.setFont(new Font("Ink Free", Font.BOLD, 60));
+        FontMetrics metrics = g.getFontMetrics(g.getFont());
+        g.drawString("Pause", (SCREEN_WIDTH - metrics.stringWidth("Pause"))/2, 100);
+
+        g.setColor(Color.GRAY);
+        g.setFont(new Font("Ink Free", Font.BOLD, 30));
+        metrics = g.getFontMetrics(g.getFont());
+        g.drawString("Press C to continue", (SCREEN_WIDTH - metrics.stringWidth("Press C to continue"))/2, SCREEN_HEIGHT/2);
     }
 
     public void newApple() {
@@ -277,6 +300,18 @@ public class GamePanel extends JPanel implements ActionListener {
                         mode = 2;
                         menu = false;
                         startGame();
+                    }
+                    break;
+                case KeyEvent.VK_P:
+                    if (running) {
+                        pause = true;
+                        running = false;
+                    }
+                    break;
+                case KeyEvent.VK_C:
+                    if (pause) {
+                        pause = false;
+                        running = true;
                     }
                     break;
             }
